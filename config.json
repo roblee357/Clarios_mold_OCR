@@ -1,0 +1,7 @@
+{
+   "crop_h_padding_factor" : 0,
+   "crop_v_padding_factor" : 0,
+   "rect_h_padding_factor" : 20,
+   "rect_v_padding_factor" : 40,
+   "scale_percent" : 40
+}
