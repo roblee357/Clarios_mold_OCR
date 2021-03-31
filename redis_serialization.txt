@@ -1,0 +1,46 @@
+sent image to ZMQ 0.005997896194458008
+reconnecting 0
+captured
+sent image to ZMQ 0.0060384273529052734
+reconnecting 0
+captured
+sent image to ZMQ 0.00597071647644043
+reconnecting 0
+captured
+sent image to ZMQ 0.008001089096069336
+reconnecting 0
+captured
+sent image to ZMQ 0.00800180435180664
+reconnecting 0
+captured
+sent image to ZMQ 0.00600743293762207
+reconnecting 0
+captured
+sent image to ZMQ 0.009001016616821289
+reconnecting 0
+captured
+sent image to ZMQ 0.0070002079010009766
+reconnecting 0
+captured
+sent image to ZMQ 0.006996631622314453
+reconnecting 0
+captured
+sent image to ZMQ 0.006009578704833984
+reconnecting 0
+captured
+sent image to ZMQ 0.009995698928833008
+reconnecting 0
+captured
+sent image to ZMQ 0.006999492645263672
+reconnecting 0
+captured
+sent image to ZMQ 0.008000850677490234
+reconnecting 0
+captured
+sent image to ZMQ 0.006997585296630859
+reconnecting 0
+captured
+sent image to ZMQ 0.014997482299804688
+reconnecting 0
+captured
+sent image to ZMQ 0.005006074905395508

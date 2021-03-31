@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display Webcam Stream</title>
+ 
+<style>
+#container {
+	margin: 0px auto;
+	width: 700px;
+	height: 375px;
+	border: 10px #333 solid;
+}
+#videoElement {
+	width: 700px;
+	height: 375px;
+	background-color: rgb(0, 0, 0);
+}
+
+.item1 { grid-area: cam_view; }
+.item2 { grid-area: button1; }
+.item3 { grid-area: button2; }
+/* .item4 { grid-area: button3; }
+.item5 { grid-area: button4; } */
+
+.capture_button {
+  background-color: #bbb;
+    display: block;
+    /* margin: 10px 0; */
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+}
+
+.light_switch {
+    background-color: #bbb;
+    display: block;
+    /* margin: 10px 0; */
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+}
+
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'cam_view cam_view cam_view cam_view button1'
+    'cam_view cam_view cam_view cam_view button2';
+  grid-gap: 10px;
+  background-color: rgb(0, 0, 0);
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+</style>
+</head>
+ 
+<body>
+
+  <div class="grid-container">
+    <div class="item1" id="container" ><video autoplay="true" id="videoElement"></video></div>
+    <div class="item2"><button class="capture_button">Capture</button></div>
+    <div class="item3"><button class="light_switch">Light</button></div>  
+    <!-- <div class="item4">button3</div>
+    <div class="item5">button4</div> -->
+  </div>
+
+  <canvas id="videoCanvas"></canvas>
+
+<!-- <div id="container">
+	<video autoplay="true" id="videoElement"></video>
+  <button class="switch">On / Off</button>
+</div> -->
+
+<script>
+
+function drawImge(){
+    var video = document.querySelector("#videoElement");
+    var canvas = document.querySelector("#videoCanvas");
+    var ctx = canvas.getContext('2d');
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    var faceArea = 300;
+    var pX=canvas.width/2 - faceArea/2;
+    var pY=canvas.height/2 - faceArea/2;
+
+    ctx.rect(pX,pY,faceArea,faceArea);
+    ctx.lineWidth = "6";
+    ctx.strokeStyle = "red";    
+    ctx.stroke();
+
+
+    setTimeout(drawImge , 100);
+}
+//Test browser support
+const SUPPORTS_MEDIA_DEVICES = 'mediaDevices' in navigator;
+var video = document.querySelector("#videoElement");
+if (SUPPORTS_MEDIA_DEVICES) {
+  //Get the environment camera (usually the second one)
+  navigator.mediaDevices.enumerateDevices().then(devices => {
+  
+    const cameras = devices.filter((device) => device.kind === 'videoinput');
+
+    if (cameras.length === 0) {
+      throw 'No camera found on this device.';
+    }
+    const camera = cameras[cameras.length - 1];
+
+    // Create stream and get video track
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        deviceId: camera.deviceId,
+        facingMode: ['user', 'environment'],
+        height: {ideal: 375},
+        width: {ideal: 700}
+      }
+    }).then(stream => {
+      const track = stream.getVideoTracks()[0];
+      video.srcObject = stream;
+      video.play();
+      var torchOn = false;
+
+      //Create image capture object and get camera capabilities
+      const imageCapture = new ImageCapture(track)
+      const photoCapabilities = imageCapture.getPhotoCapabilities().then(() => {
+
+        //todo: check if camera has a torch
+
+        //let there be light!
+        const btn = document.querySelector('.light_switch');
+        btn.addEventListener('click', function(){
+            torchOn = !torchOn;
+          track.applyConstraints({
+            advanced: [{torch: torchOn}]
+          });
+        });
+      });
+    });
+  });
+  
+  //The light will be on as long the track exists
+  
+  
+}
+</script>
+
+
+
+</body>
+</html>

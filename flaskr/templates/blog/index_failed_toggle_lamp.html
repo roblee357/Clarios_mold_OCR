@@ -1,0 +1,77 @@
+<html>  
+  <body>
+    <video autoplay></video>
+  </body>
+<html>  
+
+<script>
+
+// if (navigator.mediaDevices.getUserMedia) {
+
+    navigator.mediaDevices.getUserMedia({  
+        video: {
+          facingMode: 'environment',
+        }
+      })
+      .then((stream) => {
+        const video = document.querySelector('video');
+        video.srcObject = stream;
+        video.srcObject.applyConstraints({
+            advanced: [{torch: true}]});
+        })
+      .catch(err => console.error('getUserMedia() failed: ', err));
+
+    //   const track = video.srcObject.getVideoTracks()[0];
+
+// get the active track of the stream
+
+// if (typeof stream !== 'undefined') {
+// const track = stream.getVideoTracks()[0];
+        
+//         video.addEventListener('loadedmetadata', (e) => {  
+//             window.setTimeout(() => (
+//                 onCapabilitiesReady(track.getCapabilities())
+//                 ), 2500);
+//             });
+//         }
+
+// function onCapabilitiesReady(capabilities) {  
+//   console.log(capabilities);
+// }
+
+// // called when our hacky check above finds capabilities
+// function onCapabilitiesReady(capabilities) {  
+//   if (capabilities.zoom) {
+//     track.applyConstraints({
+//       advanced: [{zoom: capabilities.zoom.max}]
+//     })
+//     .catch(e => console.log(e));
+//   }
+// }
+
+function onCapabilitiesReady(capabilities) {  
+  if (capabilities.torch) {
+    track.applyConstraints({
+      advanced: [{torch: true}]
+    })
+    .catch(e => console.log(e));
+  }
+}
+
+// function onCapabilitiesReady(capabilities) {  
+//   console.log(track.getSettings());
+// }
+
+// function onCapabilitiesReady(capabilities) {  
+//     if (capabilities.zoom) {
+//       track.applyConstraints({
+//         advanced: [{zoom: capabilities.zoom.max}]
+//       })
+//       .then(() => {
+//         console.log(track.getConstraints());
+//       })
+//       .catch(e => console.log(e));
+//     }
+//   }
+// }
+</script>
