@@ -18,7 +18,6 @@ def modify(n, x, s, A):
 
 if __name__ == '__main__':
     lock = Lock()
-
     n = Value('i', 7)
     x = Value(c_double, 1.0/3.0, lock=False)
     s = Array('c', b'hello world', lock=lock)
@@ -28,15 +27,15 @@ if __name__ == '__main__':
     print(arr.shape)
     tup = tuple(map(tuple, arr))
     A = Array(Point, tup, lock=lock)
-
     p = Process(target=modify, args=(n, x, s, A))
     p.start()
     p.join()
-
     print(n.value)
     print(x.value)
     print(s.value)
     print([(a.x, a.y) for a in A])
+
+
 
 # # import multiprocessing
 # import time

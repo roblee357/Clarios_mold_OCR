@@ -3,5 +3,8 @@
    "crop_v_padding_factor" : 0,
    "rect_h_padding_factor" : 20,
    "rect_v_padding_factor" : 40,
+   "win_width" : 160,
+   "win_height" : 40,
    "scale_percent" : 40
 }
+
